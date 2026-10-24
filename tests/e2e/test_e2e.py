@@ -6,19 +6,13 @@ from playwright.sync_api import expect
 
 @pytest.mark.e2e
 def test_hello_world(page, fastapi_server):
-    """
-    Test that the homepage displays "Hello World".
+    """Verify that the redesigned calculator homepage loads."""
+    page.goto("http://localhost:8000")
 
-    This test verifies that when a user navigates to the homepage of the application,
-    the main header (`<h1>`) correctly displays the text "Hello World". This ensures
-    that the server is running and serving the correct template.
-    """
-    # Navigate the browser to the homepage URL of the FastAPI application.
-    page.goto('http://localhost:8000')
-    
-    # Use an assertion to check that the text within the first <h1> tag is exactly "Hello World".
-    # If the text does not match, the test will fail.
-    assert page.inner_text('h1') == 'Hello World'
+    expect(page.locator("#calculator-heading")).to_have_text(
+        "Calculator",
+        timeout=10000
+    )
 
 @pytest.mark.e2e
 def test_calculator_add(page, fastapi_server):
@@ -43,7 +37,7 @@ def test_calculator_add(page, fastapi_server):
     
     # Use an assertion to check that the text within the result div (with id 'result') is exactly "Result: 15".
     # This verifies that the addition operation was performed correctly and the result is displayed as expected.
-    expect(page.locator("#result")).to_have_text("Calculation Result: 15",timeout=10000)
+    expect(page.locator("#result")).to_have_text("15",timeout=10000)
 
 
 @pytest.mark.e2e
@@ -65,7 +59,7 @@ def test_calculator_subtract(page, fastapi_server):
     page.click('button:text("Subtract")')
 
     # Verify the subtraction result.
-    expect(page.locator("#result")).to_have_text("Calculation Result: 5",timeout=10000)
+    expect(page.locator("#result")).to_have_text("5",timeout=10000)
 
 
 @pytest.mark.e2e
@@ -87,7 +81,7 @@ def test_calculator_multiply(page, fastapi_server):
     page.click('button:text("Multiply")')
 
     # Verify the multiplication result.
-    expect(page.locator("#result")).to_have_text("Calculation Result: 50",timeout=10000)
+    expect(page.locator("#result")).to_have_text("50",timeout=10000)
 
 
 @pytest.mark.e2e
@@ -109,7 +103,7 @@ def test_calculator_divide(page, fastapi_server):
     page.click('button:text("Divide")')
 
     # Verify the division result.
-    expect(page.locator("#result")).to_have_text("Calculation Result: 5",timeout=10000)
+    expect(page.locator("#result")).to_have_text("5",timeout=10000)
 
 
 @pytest.mark.e2e
