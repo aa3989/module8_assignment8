@@ -44,11 +44,11 @@ jobs:
 
       - name: Run integration tests
         run: |
-          python -m pytest tests/integration/
+          python -m pytest tests/integration/ --no-cov -v
 
       - name: Run end-to-end tests
         run: |
-          python -m pytest tests/e2e/
+          python -m pytest tests/e2e/ --no-cov -v
 
   security:
     name: Docker Security Scan

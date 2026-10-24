@@ -43,7 +43,74 @@ def test_calculator_add(page, fastapi_server):
     
     # Use an assertion to check that the text within the result div (with id 'result') is exactly "Result: 15".
     # This verifies that the addition operation was performed correctly and the result is displayed as expected.
-    assert page.inner_text('#result') == 'Calculation Result: 15'
+    expect(page.locator("#result")).to_have_text("Calculation Result: 15",timeout=10000)
+
+
+@pytest.mark.e2e
+def test_calculator_subtract(page, fastapi_server):
+    """
+    Test the subtraction functionality of the calculator.
+
+    This test simulates a user subtracting two numbers
+    through the web interface and verifies the result.
+    """
+    # Navigate to the homepage.
+    page.goto("http://localhost:8000")
+
+    # Enter the numbers.
+    page.fill("#a", "10")
+    page.fill("#b", "5")
+
+    # Click the Subtract button.
+    page.click('button:text("Subtract")')
+
+    # Verify the subtraction result.
+    expect(page.locator("#result")).to_have_text("Calculation Result: 5",timeout=10000)
+
+
+@pytest.mark.e2e
+def test_calculator_multiply(page, fastapi_server):
+    """
+    Test the multiplication functionality of the calculator.
+
+    This test simulates a user multiplying two numbers
+    through the web interface and verifies the result.
+    """
+    # Navigate to the homepage.
+    page.goto("http://localhost:8000")
+
+    # Enter the numbers.
+    page.fill("#a", "10")
+    page.fill("#b", "5")
+
+    # Click the Multiply button.
+    page.click('button:text("Multiply")')
+
+    # Verify the multiplication result.
+    expect(page.locator("#result")).to_have_text("Calculation Result: 50",timeout=10000)
+
+
+@pytest.mark.e2e
+def test_calculator_divide(page, fastapi_server):
+    """
+    Test the division functionality of the calculator.
+
+    This test simulates a user dividing two numbers
+    through the web interface and verifies the result.
+    """
+    # Navigate to the homepage.
+    page.goto("http://localhost:8000")
+
+    # Enter the numbers.
+    page.fill("#a", "10")
+    page.fill("#b", "2")
+
+    # Click the Divide button.
+    page.click('button:text("Divide")')
+
+    # Verify the division result.
+    expect(page.locator("#result")).to_have_text("Calculation Result: 5",timeout=10000)
+
 
 @pytest.mark.e2e
 def test_calculator_divide_by_zero(page, fastapi_server):
@@ -70,4 +137,4 @@ def test_calculator_divide_by_zero(page, fastapi_server):
     # Use an assertion to check that the text within the result div (with id 'result') is exactly
     # "Error: Cannot divide by zero!". This verifies that the application handles division by zero
     # gracefully and displays the correct error message to the user.
-    expect(page.locator("#result")).to_have_text("Error: Cannot divide by zero!")
+    expect(page.locator("#result")).to_have_text("Error: Cannot divide by zero!", timeout=10000)
