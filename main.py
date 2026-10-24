@@ -20,6 +20,12 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Docker."""
+    logger.info("Health check successful")
+    return {"status": "healthy"}
+    
 # Setup templates directory
 templates = Jinja2Templates(directory="templates")
 
@@ -119,5 +125,7 @@ async def divide_route(operation: OperationRequest):
         logger.error(f"Divide Operation Internal Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
+
+    
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

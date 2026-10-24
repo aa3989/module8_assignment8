@@ -24,6 +24,12 @@ def client():
     with TestClient(app) as client:
         yield client  # Provide the TestClient instance to the test functions
 
+def test_health_check(client):
+    """Verify the application health endpoint."""
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "healthy"}
 # ---------------------------------------------
 # Test Function: test_add_api
 # ---------------------------------------------
