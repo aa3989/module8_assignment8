@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p test-results
           python -m pytest tests/unit/ \
-            --cov=src \
+            --cov=app \
             --junitxml=test-results/junit.xml
 
       - name: Run integration tests

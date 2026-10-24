@@ -113,8 +113,8 @@ async def divide_route(operation: OperationRequest):
         logger.info("Divide Operation Successful: %s / %s = %s",operation.a, operation.b, result)
         return OperationResponse(result=result)
     except ValueError as e:
-        logger.error(f"Divide Operation Error: {str(e)}")
-        raise HTTPException(status_code=400, detail=str(e))
+        logger.warning("Divide Operation Error: %s", e)
+        raise HTTPException(status_code=400,detail=str(e)) from e
     except Exception as e:
         logger.error(f"Divide Operation Internal Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
